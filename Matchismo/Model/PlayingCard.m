@@ -15,7 +15,7 @@
     int score = 0;
     
     if([otherCards count]==1) {
-        PlayingCard *otherCard = [otherCards lastObject];
+        PlayingCard *otherCard = [otherCards firstObject];
         if([otherCard.suit isEqualToString:self.suit]) {
             score = 1;
         } else if (otherCard.rank == self.rank) {
