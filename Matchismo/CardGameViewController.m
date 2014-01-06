@@ -16,6 +16,8 @@
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *gameModeSegmentedControl;
+@property (weak, nonatomic) IBOutlet UILabel *matchLabel;
 @end
 
 @implementation CardGameViewController
@@ -51,6 +53,41 @@
         cardButton.enabled = !card.isMatched;
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
+    self.gameModeSegmentedControl.enabled = self.game.isFresh;
+    [self setMatchLabelText];
+}
+
+- (NSString *)cardContents:(NSArray *)selectedCards
+{
+    NSString *result = [[NSString alloc]init];
+    for(Card *card in selectedCards)
+    {
+        result = [result stringByAppendingString:card.contents];
+    }
+    return result;
+}
+
+- (void)setMatchLabelText
+{
+    MatchResult *latestMatchResult = [self.game getLatestMatchResult];
+    if(latestMatchResult.selectedCards.count <= 0)
+    {
+        self.matchLabel.text = @"";
+    }
+    else {
+        if(latestMatchResult.pointsScored > 0)
+        {
+            self.matchLabel.text = [NSString stringWithFormat:@"Matched %@ for %d points!", [self cardContents:latestMatchResult.selectedCards], latestMatchResult.pointsScored];
+        }
+        else if(latestMatchResult.pointsScored < 0)
+        {
+            self.matchLabel.text = [NSString stringWithFormat:@"%@ don't match! %d point penalty!", [self cardContents:latestMatchResult.selectedCards], latestMatchResult.pointsScored];
+        }
+        else
+        {
+            self.matchLabel.text = [self cardContents:latestMatchResult.selectedCards];
+        }
+    }
 }
 
 - (NSString *) titleForCard:(Card *)card
@@ -63,15 +100,21 @@
     return [UIImage imageNamed:card.isChosen ? @"cardfront" : @"cardback"];
 }
 
-- (IBAction)restart:(UIButton *)sender
+- (IBAction)touchRestartButton
 {
+    [self restart];
+}
+
+- (void)restart {
     self.game = nil; // Getter will do restart
     [self updateUI];
 }
 
-- (IBAction)selectGameMode:(id)sender
+- (IBAction)selectGameMode:(UISegmentedControl *)sender
 {
-    
+    [self restart];
+    int index = [sender selectedSegmentIndex];
+    self.game.cardsToMatch = index + 2;
 }
 
 @end
