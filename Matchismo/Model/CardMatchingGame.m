@@ -12,17 +12,10 @@
 @property (nonatomic, readwrite) NSInteger score;
 @property (nonatomic, readwrite) BOOL fresh;
 @property (nonatomic, readwrite) NSInteger pointsScored;
-@property (nonatomic, strong) NSMutableArray *cards; // of Card
 @property (nonatomic, strong) MatchResult *matchResult;
 @end
 
 @implementation CardMatchingGame
-
-- (NSMutableArray *)cards
-{
-    if(!_cards) _cards = [[NSMutableArray alloc] init];
-    return _cards;
-}
 
 - (instancetype) initWithCardCount:(NSUInteger)count usingDeck:(id)deck
 {
@@ -30,18 +23,6 @@
     
     if(self)
     {
-        for (int i = 0; i < count; i++)
-        {
-            Card *card = [deck drawRandomCard];
-            if(card)
-            {
-                [self.cards addObject:card];
-            } else {
-                self = nil;
-                break;
-            }
-        }
-        self.fresh = YES; // Vraag: Is dit de beste plek voor deze init?
         self.cardsToMatch = 2;
     }
     
@@ -105,36 +86,6 @@ static const int MATCH_BONUS = 4;
     {
         self.fresh = NO;
     }
-}
-
-- (Card *)cardAtIndex:(NSUInteger)index
-{
-    return [self.cards objectAtIndex:index];
-}
-
-- (instancetype) init
-{
-    return nil;
-}
-
-- (MatchResult *)getLatestMatchResult
-{
-    return self.matchResult;
-}
-
-- (NSArray *)getChosenCards
-{
-    NSMutableArray *result = [[NSMutableArray alloc] init];
-    
-    for(Card *card in self.cards)
-    {
-        if(card.isChosen && !card.isMatched)
-        {
-            [result addObject:card];
-        }
-    }
-    
-    return [[NSArray alloc] initWithArray:result];
 }
 
 @end
