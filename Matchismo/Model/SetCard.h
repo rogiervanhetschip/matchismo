@@ -12,10 +12,10 @@
 
 @property (nonatomic, strong) NSString *color;
 @property (nonatomic, strong) NSString *fill;
-@property (nonatomic) NSUInteger number;
+@property (nonatomic) NSInteger number;
 
 + (NSArray *)validFills;
 + (NSArray *)validColors;
-+ (NSUInteger *) maxNumber;
++ (NSInteger) maxNumber;
 
 @end

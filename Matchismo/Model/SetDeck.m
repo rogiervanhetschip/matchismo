@@ -21,7 +21,7 @@
         {
             for(NSString *color in [SetCard validColors])
             {
-                for(int number = 0; number < (int)[SetCard maxNumber]; number++)
+                for(int number = 0; number < [SetCard maxNumber]; number++)
                 {
                     SetCard *card = [[SetCard alloc]init]; // TODO: Kleur, number en fill zetten
                     card.fill = fill;
