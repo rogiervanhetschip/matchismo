@@ -324,19 +324,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46BB0B1E1887FDEC00808A2A /* Game.m in Sources */,
 				46B1EB9D18758C82005DA6CF /* Card.m in Sources */,
-				46AD6080187B031A001B7A67 /* MatchResult.m in Sources */,
-				46E35DD118859390008AD4DE /* SetGame.m in Sources */,
-				46B1EB9F18758C82005DA6CF /* PlayingCard.m in Sources */,
 				46B1EB9E18758C82005DA6CF /* Deck.m in Sources */,
-				46E35DCB18859342008AD4DE /* SetCard.m in Sources */,
+				46AD6080187B031A001B7A67 /* MatchResult.m in Sources */,
+				46BB0B1E1887FDEC00808A2A /* Game.m in Sources */,
+				46B1EB9F18758C82005DA6CF /* PlayingCard.m in Sources */,
 				46B1EBA018758C82005DA6CF /* PlayingCardDeck.m in Sources */,
 				46551FA01876CF960074C91E /* CardMatchingGame.m in Sources */,
+				46E35DCB18859342008AD4DE /* SetCard.m in Sources */,
+				46E35DCE1885936A008AD4DE /* SetDeck.m in Sources */,
+				46E35DD118859390008AD4DE /* SetGame.m in Sources */,
 				46E5018E187572AF00F77F99 /* CardGameAppDelegate.m in Sources */,
 				46E50194187572AF00F77F99 /* CardGameViewController.m in Sources */,
 				46E5018A187572AF00F77F99 /* main.m in Sources */,
-				46E35DCE1885936A008AD4DE /* SetDeck.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

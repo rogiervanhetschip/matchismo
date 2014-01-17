@@ -7,13 +7,11 @@
 //
 
 #import "Game.h"
+#import "Deck.h"
 
 @interface Game()
-@property (nonatomic, readwrite) NSInteger score;
-@property (nonatomic, readwrite) BOOL fresh;
 @property (nonatomic, readwrite) NSInteger pointsScored;
 @property (nonatomic, readwrite) NSMutableArray *cards; // of Card
-@property (nonatomic, strong) MatchResult *matchResult;
 @end
 
 @implementation Game

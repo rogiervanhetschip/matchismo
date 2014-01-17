@@ -19,8 +19,9 @@
 - (Card *)cardAtIndex:(NSUInteger)index;
 - (MatchResult *)getLatestMatchResult;
 
-@property (nonatomic, readonly) NSInteger score;
-@property (nonatomic, readonly, getter=isFresh) BOOL fresh;
+@property (nonatomic) NSInteger score; // protected
+@property (nonatomic, getter=isFresh) BOOL fresh; // protected
+@property (nonatomic, strong) MatchResult *matchResult; // protected
 @property (nonatomic, readonly) NSMutableArray *cards; // of Card
 
 @end

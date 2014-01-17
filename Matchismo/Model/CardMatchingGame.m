@@ -9,8 +9,6 @@
 #import "CardMatchingGame.h"
 
 @interface CardMatchingGame()
-@property (nonatomic, readwrite) NSInteger score;
-@property (nonatomic, readwrite) BOOL fresh;
 @property (nonatomic, readwrite) NSInteger pointsScored;
 @property (nonatomic, strong) MatchResult *matchResult;
 @property (nonatomic) NSInteger cardsToMatch;
