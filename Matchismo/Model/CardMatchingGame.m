@@ -13,6 +13,7 @@
 @property (nonatomic, readwrite) BOOL fresh;
 @property (nonatomic, readwrite) NSInteger pointsScored;
 @property (nonatomic, strong) MatchResult *matchResult;
+@property (nonatomic) NSInteger cardsToMatch;
 @end
 
 @implementation CardMatchingGame
