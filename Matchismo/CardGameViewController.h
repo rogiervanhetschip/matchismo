@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Game.h"
 
-@interface CardGameViewController : UIViewController
+@interface CardGameViewController : UIViewController {
+    @protected
+    Game *_game;
+}
+
+@property (strong, readonly) IBOutletCollection(UIButton) NSArray *cardButtons;
+@property (strong, nonatomic, readonly) Game *game; // Protected
 
 @end

@@ -10,6 +10,21 @@
 
 @implementation SetCard
 
+- (NSAttributedString *)contents
+{
+    // Create number of symbols
+    NSMutableString *symbols = nil;
+    while (symbols.length < self.number) {
+        [symbols appendString:self.symbol];
+    }
+    
+    // Create color
+    // Fill as alpha
+    UIColor *color = [[self colorAsUIColor] colorWithAlphaComponent: [self fillAsFloat]];
+    
+    return [[NSAttributedString alloc] initWithString:symbols attributes:@{NSForegroundColorAttributeName: color}];
+}
+
 - (int)match:(NSArray *)otherCards
 {
     int result = 0;
@@ -57,6 +72,23 @@
     }
 }
 
+// Vraag: Hoort dit in model of viewcontroller? Dat we UIColor gebruiken, is een UI keuze, dus viewcontroller, zou je zeggen.
+- (UIColor *)colorAsUIColor
+{
+    if([[[SetCard validColors] objectAtIndex: 0] isEqualToString:[self color]])
+    {
+        return [UIColor colorWithRed:1 green:0 blue:0 alpha:1];
+    }
+    else if([[[SetCard validColors] objectAtIndex: 1] isEqualToString:[self color]])
+    {
+        return [UIColor colorWithRed:0 green:1 blue:0 alpha:1];
+    }
+    else
+    {
+        return [UIColor colorWithRed:0 green:0 blue:1 alpha:1];
+    }
+}
+
 - (void)setFill:(NSString *)fill
 {
     if([[SetCard validFills] containsObject:fill])
@@ -65,11 +97,35 @@
     }
 }
 
+- (CGFloat)fillAsFloat
+{
+    if([[[SetCard validFills] objectAtIndex:0] isEqualToString:self.fill])
+        {
+            return (CGFloat)0.0;
+        }
+        else if([[[SetCard validFills] objectAtIndex:1] isEqualToString:self.fill])
+        {
+            return (CGFloat)0.5;
+        }
+        else
+        {
+            return (CGFloat)1.0;
+        }
+}
+
 - (void)setNumber:(NSInteger)number
 {
     if([SetCard maxNumber] >= number)
     {
         _number = number;
+    }
+}
+
+- (void)setSymbol:(NSString *)symbol
+{
+    if([[SetCard validSymbols] containsObject:symbol])
+    {
+        _symbol = symbol;
     }
 }
 
@@ -86,6 +142,11 @@
 + (NSInteger)maxNumber
 {
     return 3;
+}
+
++ (NSArray *)validSymbols
+{
+    return @[@"▲", @"◼︎", @"●"];
 }
 
 @end

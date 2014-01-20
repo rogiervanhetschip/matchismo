@@ -18,7 +18,7 @@
 
 - (instancetype) initWithCardCount:(NSUInteger)count usingDeck:(id)deck
 {
-    self = [super init];
+    self = [super initWithCardCount:count usingDeck:deck];
     
     if(self)
     {

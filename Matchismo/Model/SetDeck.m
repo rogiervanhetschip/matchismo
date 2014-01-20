@@ -23,11 +23,15 @@
             {
                 for(int number = 0; number < [SetCard maxNumber]; number++)
                 {
-                    SetCard *card = [[SetCard alloc]init]; // TODO: Kleur, number en fill zetten
-                    card.fill = fill;
-                    card.color = color;
-                    card.number = number;
-                    [self addCard:card atTop:YES];
+                    for(NSString *symbol in [SetCard validSymbols])
+                    {
+                        SetCard *card = [[SetCard alloc]init];
+                        card.fill = fill;
+                        card.color = color;
+                        card.number = number;
+                        card.symbol = symbol;
+                        [self addCard:card atTop:YES];
+                    }
                 }
             }
         }

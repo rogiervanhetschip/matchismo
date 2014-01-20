@@ -1,4 +1,4 @@
-//
+ //
 //  CardGameViewController.m
 //  Matchismo
 //
@@ -8,29 +8,27 @@
 
 #import "CardGameViewController.h"
 #import "Deck.h"
-#import "PlayingCardDeck.h"
-#import "CardMatchingGame.h"
 
 @interface CardGameViewController ()
 @property (strong, nonatomic) Deck *deck;
-@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
-@property (strong, nonatomic) CardMatchingGame *game;
+@property (strong, nonatomic, readwrite) Game *game;
+@property (strong, readwrite) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *matchLabel;
 @end
 
 @implementation CardGameViewController
 
-- (CardMatchingGame *)game
+- (Game *)game
 {
-    if(!_game) _game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count]
+    if(!_game) _game = [[Game alloc] initWithCardCount:[self.cardButtons count]
                                                          usingDeck:[self createDeck]];
     return _game;
 }
 
 - (Deck *) createDeck
 {
-    return [[PlayingCardDeck alloc]init];
+    return [[Deck alloc]init];
 }
 
 - (IBAction)touchCardButton:(UIButton *)sender

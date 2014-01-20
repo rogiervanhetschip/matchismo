@@ -13,9 +13,11 @@
 @property (nonatomic, strong) NSString *color;
 @property (nonatomic, strong) NSString *fill;
 @property (nonatomic) NSInteger number;
+@property (nonatomic) NSString *symbol;
 
 + (NSArray *)validFills;
 + (NSArray *)validColors;
 + (NSInteger) maxNumber;
++ (NSArray *)validSymbols;
 
 @end
