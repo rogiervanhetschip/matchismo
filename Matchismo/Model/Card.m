@@ -27,4 +27,9 @@
     return score;
 }
 
+- (NSString *)contents
+{
+    return nil;
+}
+
 @end

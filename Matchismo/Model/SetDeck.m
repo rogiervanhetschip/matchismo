@@ -21,7 +21,7 @@
         {
             for(NSString *color in [SetCard validColors])
             {
-                for(int number = 0; number < [SetCard maxNumber]; number++)
+                for(int number = 1; number <= [SetCard maxNumber]; number++)
                 {
                     for(NSString *symbol in [SetCard validSymbols])
                     {

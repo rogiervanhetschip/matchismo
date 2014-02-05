@@ -20,4 +20,6 @@
 + (NSInteger) maxNumber;
 + (NSArray *)validSymbols;
 
+- (CGFloat)fillAsFloat;
+
 @end

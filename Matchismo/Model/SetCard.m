@@ -10,21 +10,6 @@
 
 @implementation SetCard
 
-- (NSAttributedString *)contents
-{
-    // Create number of symbols
-    NSMutableString *symbols = nil;
-    while (symbols.length < self.number) {
-        [symbols appendString:self.symbol];
-    }
-    
-    // Create color
-    // Fill as alpha
-    UIColor *color = [[self colorAsUIColor] colorWithAlphaComponent: [self fillAsFloat]];
-    
-    return [[NSAttributedString alloc] initWithString:symbols attributes:@{NSForegroundColorAttributeName: color}];
-}
-
 - (int)match:(NSArray *)otherCards
 {
     int result = 0;
@@ -32,7 +17,8 @@
     {
         if([self fillIsEqualOrDifferentFromCards:otherCards] &&
            [self numberIsEqualOrDifferentFromCards:otherCards] &&
-           [self colorIsEqualOrDifferentFromCards:otherCards])
+           [self colorIsEqualOrDifferentFromCards:otherCards] &&
+           [self symbolIsEqualOrDifferentFromCards:otherCards])
         {
             result = 1;
         }
@@ -64,28 +50,19 @@
     return (self.color != otherCard0.color && self.color != otherCard1.color && otherCard0.color != otherCard1.color) || (self.color == otherCard0.color && self.color == otherCard1.color);
 }
 
+- (BOOL)symbolIsEqualOrDifferentFromCards:(NSArray *)otherCards
+{
+    SetCard *otherCard0 = (SetCard *)otherCards[0];
+    SetCard *otherCard1 = (SetCard *)otherCards[1];
+    // Symbols are all different, or all equal
+    return (self.symbol != otherCard0.symbol && self.symbol != otherCard1.symbol && otherCard0.symbol != otherCard1.symbol) || (self.symbol == otherCard0.symbol && self.symbol == otherCard1.symbol);
+}
+
 - (void)setColor:(NSString *)color
 {
     if([[SetCard validColors] containsObject:color])
     {
         _color = color;
-    }
-}
-
-// Vraag: Hoort dit in model of viewcontroller? Dat we UIColor gebruiken, is een UI keuze, dus viewcontroller, zou je zeggen.
-- (UIColor *)colorAsUIColor
-{
-    if([[[SetCard validColors] objectAtIndex: 0] isEqualToString:[self color]])
-    {
-        return [UIColor colorWithRed:1 green:0 blue:0 alpha:1];
-    }
-    else if([[[SetCard validColors] objectAtIndex: 1] isEqualToString:[self color]])
-    {
-        return [UIColor colorWithRed:0 green:1 blue:0 alpha:1];
-    }
-    else
-    {
-        return [UIColor colorWithRed:0 green:0 blue:1 alpha:1];
     }
 }
 

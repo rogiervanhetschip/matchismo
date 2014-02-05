@@ -15,6 +15,7 @@
 }
 
 @property (strong, readonly) IBOutletCollection(UIButton) NSArray *cardButtons;
+@property (weak, nonatomic) IBOutlet UILabel *matchLabel;
 @property (strong, nonatomic, readonly) Game *game; // Protected
 
 @end

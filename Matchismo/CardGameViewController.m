@@ -8,13 +8,14 @@
 
 #import "CardGameViewController.h"
 #import "Deck.h"
+#import "HistoryViewController.h"
 
 @interface CardGameViewController ()
 @property (strong, nonatomic) Deck *deck;
 @property (strong, nonatomic, readwrite) Game *game;
 @property (strong, readwrite) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
-@property (weak, nonatomic) IBOutlet UILabel *matchLabel;
+@property (strong, nonatomic) NSMutableArray *historyTexts;
 @end
 
 @implementation CardGameViewController
@@ -26,6 +27,12 @@
     return _game;
 }
 
+- (NSArray *)historyTexts
+{
+    if(!_historyTexts) _historyTexts = [[NSMutableArray alloc] init];
+    return _historyTexts;
+}
+
 - (Deck *) createDeck
 {
     return [[Deck alloc]init];
@@ -35,7 +42,13 @@
 {
     int cardIndex = [self.cardButtons indexOfObject:sender];
     [self.game chooseCardAtIndex:cardIndex];
+    [self storeHistoryText];
     [self updateUI];
+}
+
+- (void)setCard:(Card *)card cardButton:(UIButton *)cardButton
+{
+    [cardButton setTitle:[self titleForCard:card] forState:UIControlStateNormal];
 }
 
 - (void)updateUI
@@ -44,7 +57,7 @@
     {
         int cardIndex = [self.cardButtons indexOfObject:cardButton];
         Card *card = [self.game cardAtIndex:cardIndex];
-        [cardButton setTitle:[self titleForCard:card] forState:UIControlStateNormal];
+        [self setCard:card cardButton:cardButton];
         [cardButton setBackgroundImage:[self backgroundImageForCard:card]
                               forState:UIControlStateNormal];
         cardButton.enabled = !card.isMatched;
@@ -65,25 +78,34 @@
 
 - (void)setMatchLabelText
 {
+    self.matchLabel.text = [self getMatchLabelText];
+}
+
+- (NSString *)getMatchLabelText
+{
+    NSString *result = @"";
     MatchResult *latestMatchResult = [self.game getLatestMatchResult];
-    if(latestMatchResult.selectedCards.count <= 0)
+    if(latestMatchResult.selectedCards.count > 0)
     {
-        self.matchLabel.text = @"";
-    }
-    else {
         if(latestMatchResult.pointsScored > 0)
         {
-            self.matchLabel.text = [NSString stringWithFormat:@"Matched %@ for %d points!", [self cardContents:latestMatchResult.selectedCards], latestMatchResult.pointsScored];
+            result = [NSString stringWithFormat:@"Matched %@ for %d points!", [self cardContents:latestMatchResult.selectedCards], latestMatchResult.pointsScored];
         }
         else if(latestMatchResult.pointsScored < 0)
         {
-            self.matchLabel.text = [NSString stringWithFormat:@"%@ don't match! %d point penalty!", [self cardContents:latestMatchResult.selectedCards], latestMatchResult.pointsScored];
+            result = [NSString stringWithFormat:@"%@ don't match! %d point penalty!", [self cardContents:latestMatchResult.selectedCards], latestMatchResult.pointsScored];
         }
         else
         {
-            self.matchLabel.text = [self cardContents:latestMatchResult.selectedCards];
+            result = [self cardContents:latestMatchResult.selectedCards];
         }
     }
+    return result;
+}
+
+- (void) storeHistoryText
+{
+    [self.historyTexts addObject:[self getMatchLabelText]];
 }
 
 - (NSString *) titleForCard:(Card *)card
@@ -104,6 +126,18 @@
 - (void)restart {
     self.game = nil; // Getter will do restart
     [self updateUI];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([segue.identifier isEqualToString:@"Set history"] || [segue.identifier isEqualToString:@"Matchem history"])
+    {
+        if([segue.destinationViewController isKindOfClass:[HistoryViewController class]])
+        {
+            HistoryViewController *histVC = (HistoryViewController *)segue.destinationViewController;
+            histVC.historyTexts = [[NSArray alloc]initWithArray:self.historyTexts];
+        }
+    }
 }
 
 @end
